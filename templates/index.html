@@ -3,41 +3,4 @@ endblock %} {% block stylesheets %} {% endblock stylesheets %} {% block content
 %}
 <!-- this form shoud be responsive to all screen sizes and centered in on screen in a card with some shadow effect -->
 
-<div class="container login-form">
-  <div class="row">
-    <div class="col-md-6 offset-md-3">
-      <div class="card">
-        <div class="card-body">
-          <h1 class="card-title">Login</h1>
-          <form action="/login" method="POST">
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input
-                type="text"
-                class="form-control"
-                id="username"
-                name="username"
-                placeholder="Enter username"
-              />
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="password"
-                name="password"
-                placeholder="Password"
-              />
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-<form>
-</div>
-
-
-{% endblock %}
+{% endblock %} {% block scripts %} {% endblock %}
