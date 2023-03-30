@@ -1,6 +1,20 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import InputRequired, Length, ValidationError
+from wtforms import (
+    StringField,
+    PasswordField,
+    SubmitField,
+    BooleanField,
+    SelectField,
+    RadioField,
+    IntegerField,
+)
+from wtforms.validators import (
+    InputRequired,
+    Length,
+    ValidationError,
+    DataRequired,
+    Optional,
+)
 from app.models import User, API_Key
 
 
@@ -55,3 +69,53 @@ class API_Form(FlaskForm):
             raise ValidationError(
                 "That API key already exists. Please choose a different one."
             )
+
+
+class SearchForm(FlaskForm):
+    search_type = SelectField(
+        "Search Type",
+        choices=[
+            ("subreddit", "Subreddit"),
+            ("redditor", "Redditor"),
+            ("submission", "Submission"),
+            ("comments", "Comments"),
+        ],
+        validators=[DataRequired()],
+    )
+    query = StringField("Query", validators=[DataRequired()])
+    sort = SelectField(
+        "Sort",
+        choices=[
+            ("relevance", "Relevance"),
+            ("hot", "Hot"),
+            ("top", "Top"),
+            ("new", "New"),
+            ("comments", "Comments"),
+        ],
+        validators=[DataRequired()],
+    )
+    syntax = SelectField(
+        "Syntax",
+        choices=[
+            ("cloudsearch", "Cloudsearch"),
+            ("lucene", "Lucene"),
+            ("plain", "Plain"),
+        ],
+        validators=[Optional()],
+    )
+    time_filter = SelectField(
+        "Time Filter",
+        choices=[
+            ("all", "All"),
+            ("day", "Day"),
+            ("week", "Week"),
+            ("month", "Month"),
+            ("year", "Year"),
+        ],
+        validators=[DataRequired()],
+    )
+    limit = IntegerField("Limit", validators=[Optional()])
+    subreddit = StringField("Subreddit", validators=[Optional()])
+    redditor = StringField("Redditor", validators=[Optional()])
+    submission_id = StringField("Submission ID", validators=[Optional()])
+    submit = SubmitField("Search")

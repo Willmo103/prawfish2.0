@@ -6,7 +6,7 @@
     {% if request.endpoint != 'api_key' %}
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        {% if request.endpoint != 'login' and request.endpoint != 'home' %}
+        {% if current_user.is_authenticated %}
         <li class="nav-item" id="search_link">
           <a class="nav-link" href="/search"
             ><i class="fas fa-search"></i> Search</a
@@ -20,7 +20,7 @@
         {% endif %}
       </ul>
     </div>
-    {% if request.endpoint == 'home' or request.endpoint == 'login' %}
+    {% if not current_user.is_authenticated %}
     <div class="form-inline my-2 my-lg-0" id="register_link">
       <a class="btn btn-outline-success my-2 my-sm-0" href="/register"
         ><i class="fas fa-user-plus"></i> Register</a

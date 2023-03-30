@@ -35,6 +35,19 @@ class API_Key(db.Model):
         return reddit
 
 
+class Search(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    search_type = db.Column(db.String(50), nullable=False)
+    query = db.Column(db.String(250), nullable=False)
+    sort = db.Column(db.String(50), nullable=False)
+    syntax = db.Column(db.String(50), nullable=True)
+    time_filter = db.Column(db.String(50), nullable=False)
+    limit = db.Column(db.Integer, nullable=True)
+    subreddit = db.Column(db.String(250), nullable=True)
+    redditor = db.Column(db.String(250), nullable=True)
+    submission_id = db.Column(db.String(50), nullable=True)
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))

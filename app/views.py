@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect
 from flask_login import current_user, login_user, login_required, logout_user
 from app import app, db, bcrypt
 from app.models import User, API_Key
-from app.forms import RegisterForm, LoginForm, API_Form
+from app.forms import RegisterForm, LoginForm, API_Form, SearchForm
 
 
 @app.route("/")
@@ -79,3 +79,9 @@ def api_key():
         db.session.commit()
         return redirect(url_for("login"))
     return render_template("api-key.html", form=form)
+
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    form = SearchForm()
+    return render_template("search.html", form=form)
