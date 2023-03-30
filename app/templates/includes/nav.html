@@ -4,7 +4,6 @@
     is not logged in the bar will not display -->
 
   <!-- the script for nav.js from static files to render the links depending on the page -->
-  <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/"><i class="fas fa-home"></i> Prawfish </a>
     <button
@@ -34,9 +33,23 @@
           >
         </li>
       </ul>
-      <div class="form-inline my-2 my-lg-0" id="logout_link"></div>
-      <div class="form-inline my-2 my-lg-0" id="register_link"></div>
-      <div class="form-inline my-2 my-lg-0" id="login_link"></div>
+      </div>
+         <div class="form-inline my-2 my-lg-0" id="register_link">
+           <a class="btn btn-outline-success my-2 my-sm-0" href="/register"
+             ><i class="fas fa-user-plus"></i> Register</a
+           >
+         </div>
+         <div class="form-inline my-2 my-lg-0" id="login_link">
+           <a class="btn btn-outline-success my-2 my-sm-0" href="/login"
+             ><i class="fas fa-sign-in-alt"></i> Login</a
+           >
+         </div>
+         <div class="form-inline my-2 my-lg-0" id="logout_link">
+           <a class="btn btn-outline-success my-2 my-sm-0" href="/logout"
+             ><i class="fas fa-sign-out-alt"></i> Logout</a
+           >
+         </div>
+      <!-- <div #id="buttons_div"></div> -->
     </div>
   </nav>
   <!-- end of navbar -->

@@ -29,7 +29,7 @@ def login():
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user, remember=form.remember.data)
                 return redirect(url_for("dashboard"))
-        return render_template("login.html", form=form, invalid=True)
+        return render_template("dashboard.html", form=form, invalid=True)
     return render_template("login.html", form=form)
 
 

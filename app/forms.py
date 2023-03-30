@@ -38,7 +38,7 @@ class LoginForm(FlaskForm):
 
 class API_Form(FlaskForm):
     user_agent = StringField(
-        "api_key", validators=[InputRequired(), Length(min=4, max=15)]
+        "user_agent", validators=[InputRequired(), Length(min=4, max=15)]
     )
     client_secret = StringField(
         "client_secret", validators=[InputRequired(), Length(min=4, max=15)]
@@ -46,6 +46,7 @@ class API_Form(FlaskForm):
     client_id = StringField(
         "client_id", validators=[InputRequired(), Length(min=4, max=15)]
     )
+    submit = SubmitField("Save API Key")
 
     def validate_api_key(self, api_key):
         existing_api_key = API_Key.query().first()

@@ -8,7 +8,7 @@
         <div class="card-body">
           <div class="card-title">
             <h3>Enter Reddit API Key</h3>
-            <form action="/api" method="POST">
+            <form action="/api_key" method="POST">
               <div class="form-group">
                 {{form.hidden_tag()}}
                 {{form.client_id.label(class="form-control-label")}}
@@ -22,6 +22,7 @@
                 {{form.user_agent.label(class="form-control-label")}}
                 {{form.user_agent(class="form-control", placeholder="")}}
               </div>
+              {{form.submit(class="btn btn-primary")}}
             </form>
           </div>
         </div>
