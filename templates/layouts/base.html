@@ -32,14 +32,14 @@
       integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
       crossorigin="anonymous"
     ></script>
-    <!-- <link rel="stylesheet" href="/static/css/style.css" /> -->
+    <link rel="stylesheet" href="url_for('static', filename='css/style.css')" />
     <title>{% block title %}{% endblock %}</title>
     {% block styles %}{% endblock %}
   </head>
   <body>
-    {% includes 'includes/nav.html'%}
+    {% include 'includes/nav.html'%}
     <main>{% block content %}{% endblock %}</main>
-    {% includes '/includes/footer.html' %}
+    {% include 'includes/footer.html' %}
     <!-- # page specific scripts  -->
     {% block scripts %} {% endblock %}
   </body>

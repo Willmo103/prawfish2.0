@@ -1,0 +1,39 @@
+<!-- the header and navbar for the site  -->
+<header>
+  <!-- bootstrap navbar buttons and links for 'home', 'search', 'my searches', 'logout/login' if user
+    is not logged in the bar will not display -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/"><i class="fas fa-home"></i> Home</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/search"
+            ><i class="fas fa-search"></i> Search</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/mysearches"
+            ><i class="fas fa-search"></i> My Searches</a
+          >
+        </li>
+      </ul>
+      <div class="form-inline my-2 my-lg-0">
+        <a class="btn btn-outline-success my-2 my-sm-0" href="/login"
+          ><i class="fas fa-sign-in-alt"></i> Login</a
+        >
+      </div>
+    </div>
+  </nav>
+  <!-- end of navbar -->
+</header>
