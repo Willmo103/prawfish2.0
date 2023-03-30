@@ -13,7 +13,3 @@
 !*.jpg
 !img
 !app
-
-CLIENT_ID="Mxyy-07qCs4WfOpossI4KQ"
-CLIENT_SECRET="W2qiYSGk8v7dpgmyZqm4wnTpmuHvVQ"
-USER_AGENT="image_collector_test"
