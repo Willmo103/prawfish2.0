@@ -41,7 +41,16 @@
   </head>
   <body>
     {% include 'includes/nav.html'%}
-    <main>{% block content %}{% endblock %}</main>
+    <!-- add some space around the main section so that there is no scrolling but its centered -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <main>{% block content %}{% endblock %}</main>
+        </div>
+      </div>
+    </div>
+    <!-- the footer should be anchored to the bottom of the page -->
+
     {% include 'includes/footer.html' %}
     <!-- # page specific scripts  -->
     {% block scripts %} {% endblock %}
