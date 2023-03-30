@@ -1,27 +1,12 @@
-<!-- the header and navbar for the site  -->
 <header>
-  <!-- bootstrap navbar buttons and links for 'home', 'search', 'my searches', 'logout/login' if user
-    is not logged in the bar will not display -->
-
-  <!-- the script for nav.js from static files to render the links depending on the page -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/"><i class="fas fa-home"></i> Prawfish </a>
-    <button
-      img="url(../static/img/prawfish.jpg)"
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-      <!-- display link based on page being displayed -->
-      <!-- login displayed if not logged in  -->
-    </button>
+    <!-- ... -->
+
+    {% if request.endpoint != 'api_key' %}
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
+        {% if request.endpoint != 'login' and request.endpoint != 'home' %}
         <li class="nav-item" id="search_link">
           <a class="nav-link" href="/search"
             ><i class="fas fa-search"></i> Search</a
@@ -32,25 +17,28 @@
             ><i class="fas fa-search"></i> My Searches</a
           >
         </li>
+        {% endif %}
       </ul>
-      </div>
-         <div class="form-inline my-2 my-lg-0" id="register_link">
-           <a class="btn btn-outline-success my-2 my-sm-0" href="/register"
-             ><i class="fas fa-user-plus"></i> Register</a
-           >
-         </div>
-         <div class="form-inline my-2 my-lg-0" id="login_link">
-           <a class="btn btn-outline-success my-2 my-sm-0" href="/login"
-             ><i class="fas fa-sign-in-alt"></i> Login</a
-           >
-         </div>
-         <div class="form-inline my-2 my-lg-0" id="logout_link">
-           <a class="btn btn-outline-success my-2 my-sm-0" href="/logout"
-             ><i class="fas fa-sign-out-alt"></i> Logout</a
-           >
-         </div>
-      <!-- <div #id="buttons_div"></div> -->
     </div>
+    {% if request.endpoint == 'home' or request.endpoint == 'login' %}
+    <div class="form-inline my-2 my-lg-0" id="register_link">
+      <a class="btn btn-outline-success my-2 my-sm-0" href="/register"
+        ><i class="fas fa-user-plus"></i> Register</a
+      >
+    </div>
+    <div class="form-inline my-2 my-lg-0" id="login_link">
+      <a class="btn btn-outline-success my-2 my-sm-0" href="/login"
+        ><i class="fas fa-sign-in-alt"></i> Login</a
+      >
+    </div>
+    {% else %}
+    <div class="form-inline my-2 my-lg-0" id="logout_link">
+      <a class="btn btn-outline-success my-2 my-sm-0" href="/logout"
+        ><i class="fas fa-sign-out-alt"></i> Logout</a
+      >
+    </div>
+    {% endif %} {% endif %}
+    <!-- ... -->
   </nav>
   <!-- end of navbar -->
 </header>

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import InputRequired, Length, ValidationError
 from app.models import User, API_Key
 
@@ -28,6 +28,7 @@ class LoginForm(FlaskForm):
     password = PasswordField(
         "password", validators=[InputRequired(), Length(min=8, max=80)]
     )
+    remember = BooleanField("Remember Me")
     submit = SubmitField("Login")
 
     def validate_username(self, username):

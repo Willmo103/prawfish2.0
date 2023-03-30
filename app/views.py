@@ -1,5 +1,5 @@
 from flask import render_template, url_for, redirect
-from flask_login import login_user, login_required, logout_user
+from flask_login import current_user, login_user, login_required, logout_user
 from app import app, db, bcrypt
 from app.models import User, API_Key
 from app.forms import RegisterForm, LoginForm, API_Form
@@ -9,27 +9,32 @@ from app.forms import RegisterForm, LoginForm, API_Form
 def index():
     verify_api_key = API_Key.query.first()
     if verify_api_key:
-        return redirect(url_for("login"))
-    elif not verify_api_key:
+        return redirect(url_for("home"))
+    else:
         return redirect(url_for("api_key"))
-    return redirect(url_for("home"))
 
 
 @app.route("/home")
 def home():
-    return render_template("index.html")
+    return render_template("home.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for("dashboard"))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user:
+        if user is not None:
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user, remember=form.remember.data)
                 return redirect(url_for("dashboard"))
-        return render_template("dashboard.html", form=form, invalid=True)
+            else:
+                error = "Invalid password. Please try again."
+        else:
+            error = "Username not found. Please try again."
+        return render_template("login.html", form=form, error=error)
     return render_template("login.html", form=form)
 
 
