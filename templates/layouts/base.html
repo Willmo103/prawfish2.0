@@ -32,7 +32,10 @@
       integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="url_for('static', filename='css/style.css')" />
+    <!-- <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    /> -->
     <title>{% block title %}{% endblock %}</title>
     {% block styles %}{% endblock %}
   </head>
