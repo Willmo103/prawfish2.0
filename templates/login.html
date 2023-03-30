@@ -3,4 +3,29 @@ invalid %}
 
 <div class="alert alert-danger" role="alert">Invalid username or password</div>
 {% endif %}} {% block stylesheets %} {% endblock stylesheets %} {% block content
-%} {% include 'includes/login-form.html' %} {% endblock %}
+%}
+<div class="container login-form">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title">Login</h1>
+          <form action="/login" method="POST">
+            <div class="form-group">
+              {{form.hidden_tag()}}
+              {{form.username.label(class="form-control-label")}}
+              {{form.username(class="form-control", placeholder="Enter username")}}
+            </div>
+            <div class="form-group">
+              {{form.password.label(class="form-control-label")}}
+              {{form.password(class="form-control", placeholder="Password")}}
+            </div>
+            {{form.submit(class="btn btn-primary")}}
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<form>
+</div>
+ {% endblock %}
