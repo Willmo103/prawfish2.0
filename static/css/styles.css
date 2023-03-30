@@ -1,0 +1,27 @@
+/* setting default page size to fit screen. jinja content rendered in main element will be centered with 'space-around'
+ */
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+main {
+    flex: 1 0 auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Path: static\css\styles.css */
+/* Compare this snippet from static\css\footer.css: */
+/* /* this is the css for the footer fragement to anchor it to the bottom of the display  */
+ */
