@@ -1,4 +1,16 @@
-def perform_search(params, reddit_instance):
+from app import db, context_processor
+from app import conf
+
+
+class PrawfishException(Exception):
+    pass
+
+
+def perform_search(params, reddit_instance=conf.reddit):
+    if reddit_instance is None:
+        raise PrawfishException(
+            "No reddit instance provided, check your reddit API keys."
+        )
     search_type = params.get("search_type")
     query = params.get("query")
     sort = params.get("sort")
@@ -32,3 +44,4 @@ def perform_search(params, reddit_instance):
         )
     else:
         return None
+    return search_results

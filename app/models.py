@@ -16,8 +16,7 @@ class User(UserMixin, db.Model):
 
 class API_Key(db.Model):
     __tablename__ = "api_key"
-    id = db.Column(db.Integer, primary_key=True)
-    user_agent = db.Column(db.String(15), unique=True)
+    user_agent = db.Column(db.String(15), unique=True, primary_key=True)
     client_secret = db.Column(db.String(15), unique=True)
     client_id = db.Column(db.String(15), unique=True)
 
@@ -25,8 +24,17 @@ class API_Key(db.Model):
         self.user_agent = user_agent
         self.client_secret = client_secret
         self.client_id = client_id
+        self.reddit = self._praw_client()
 
-    def praw_client(self):
+    @classmethod
+    def from_self(cls, self):
+        return cls(
+            user_agent=self.user_agent,
+            client_secret=self.client_secret,
+            client_id=self.client_id,
+        )
+
+    def _praw_client(self):
         reddit = Reddit(
             client_id=self.client_id,
             client_secret=self.client_secret,

@@ -18,7 +18,13 @@ login_manager.login_view = "login"
 
 
 from app import views
+from app.models import API_Key
 
+conf: API_Key | None = None
 # dev build all tables
 with app.app_context():
     db.create_all()
+    conf = db.session.query(API_Key).first()
+
+if conf is not None:
+    conf = conf.from_self(conf)
