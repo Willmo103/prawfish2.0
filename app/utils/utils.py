@@ -45,3 +45,6 @@ def perform_search(params, reddit_instance=conf.reddit):
     else:
         return None
     return search_results
+
+
+from app import db  # Assuming 'db' is an instance of SQLAlchemy in your Flask app
