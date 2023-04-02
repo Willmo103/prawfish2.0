@@ -1,5 +1,4 @@
-*
-!.gitignore
+﻿*
 !*.py
 !templates
 !static
@@ -14,4 +13,3 @@
 !img
 !app
 !requirements.txt
-!*docker*
