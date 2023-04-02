@@ -3,6 +3,8 @@ from flask_login import current_user, login_user, login_required, logout_user
 from app import app, db, bcrypt
 from app.models import User, API_Key
 from app.forms import RegisterForm, LoginForm, API_Form, SearchForm
+from app.utils.utils import perform_search
+from . import conf
 
 
 @app.route("/")
@@ -84,4 +86,27 @@ def api_key():
 @app.route("/search", methods=["GET", "POST"])
 def search():
     form = SearchForm()
-    return render_template("search.html", form=form)
+    search_results = None
+
+    if form.validate_on_submit():
+        search_params = {
+            "search_type": form.search_type.data,
+            "query": form.query.data,
+            "sort": form.sort.data,
+            "syntax": form.syntax.data,
+            "time_filter": form.time_filter.data,
+            "limit": form.limit.data,
+            "subreddit": form.subreddit.data,
+            "redditor": form.redditor.data,
+            "submission_id": form.submission_id.data,
+        }
+
+        search_results = perform_search(search_params, conf.reddit)
+
+        for result in search_results:
+            print(result)
+
+        print(search_results)
+        # Process the search results as needed and pass them to the template
+
+    return render_template("search.html", form=form, search_results=search_results)

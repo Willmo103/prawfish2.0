@@ -24,7 +24,6 @@ class API_Key(db.Model):
         self.user_agent = user_agent
         self.client_secret = client_secret
         self.client_id = client_id
-        self.reddit = self._praw_client()
 
     @classmethod
     def from_self(cls, self):
@@ -41,6 +40,10 @@ class API_Key(db.Model):
             user_agent=self.user_agent,
         )
         return reddit
+
+    @property
+    def reddit(self):
+        return self._praw_client()
 
 
 class Search(db.Model):

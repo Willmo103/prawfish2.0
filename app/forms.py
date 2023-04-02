@@ -15,6 +15,7 @@ from wtforms.validators import (
     DataRequired,
     Optional,
 )
+
 from app.models import User, API_Key
 
 
@@ -82,7 +83,7 @@ class SearchForm(FlaskForm):
         ],
         validators=[DataRequired()],
     )
-    query = StringField("Query", validators=[DataRequired()])
+    query = StringField("Query", validators=[Optional()])
     sort = SelectField(
         "Sort",
         choices=[
@@ -119,3 +120,49 @@ class SearchForm(FlaskForm):
     redditor = StringField("Redditor", validators=[Optional()])
     submission_id = StringField("Submission ID", validators=[Optional()])
     submit = SubmitField("Search")
+
+    def validate_search_type(self, search_type):
+        if search_type.data == "subreddit":
+            if self.subreddit.data == "":
+                raise ValidationError("Please enter a subreddit.")
+        elif search_type.data == "redditor":
+            if self.redditor.data == "":
+                raise ValidationError("Please enter a redditor.")
+        elif search_type.data == "submission":
+            if self.submission_id.data == "":
+                raise ValidationError("Please enter a submission ID.")
+        elif search_type.data == "comments":
+            if self.submission_id.data == "":
+                raise ValidationError("Please enter a submission ID.")
+
+        # set some defaults
+        # TODO: make this better over time.
+
+        if self.limit.data == "":
+            self.limit.data = 20
+
+        if self.syntax.data == "":
+            self.syntax.data = "plain"
+
+        if self.time_filter.data == "":
+            self.time_filter.data = "all"
+
+        if self.sort.data == "":
+            self.sort.data = "relevance"
+
+    def __repr__(self) -> str:
+        return (
+            f"Search Type: {self.search_type.data}\n"
+            f"Search Query: {self.query.data}\n"
+            f"Sort: {self.sort.data}\n"
+            f"Syntax: {self.syntax.data}\n"
+            f"Time Filter: {self.time_filter.data}\n"
+            f"Limit: {self.limit.data}\n"
+            f"Subreddit: {self.subreddit.data}\n"
+            f"Redditor: {self.redditor.data}\n"
+            f"Submission ID: {self.submission_id.data}\n"
+        )
+
+    def submit_search(self):
+        # TODO use the search method to take all the data and return a list of results using the praw api
+        pass

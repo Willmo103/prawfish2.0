@@ -17,7 +17,6 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 
 
-from app import views
 from app.models import API_Key
 
 conf: API_Key | None = None
@@ -27,4 +26,7 @@ with app.app_context():
     conf = db.session.query(API_Key).first()
 
 if conf is not None:
+    print("API Key found, initializing Reddit instance.")
     conf = conf.from_self(conf)
+
+from app import views
