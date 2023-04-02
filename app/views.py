@@ -72,14 +72,23 @@ def dashboard():
 def api_key():
     form = API_Form()
     if form.validate_on_submit():
-        new_api_key = API_Key(
-            user_agent=form.user_agent.data,
-            client_secret=form.client_secret.data,
-            client_id=form.client_id.data,
-        )
-        db.session.add(new_api_key)
+        existing_api_key = API_Key.query.first()
+
+        if existing_api_key:
+            existing_api_key.user_agent = form.user_agent.data
+            existing_api_key.client_secret = form.client_secret.data
+            existing_api_key.client_id = form.client_id.data
+        else:
+            new_api_key = API_Key(
+                user_agent=form.user_agent.data,
+                client_secret=form.client_secret.data,
+                client_id=form.client_id.data,
+            )
+            db.session.add(new_api_key)
+
         db.session.commit()
         return redirect(url_for("login"))
+
     return render_template("api-key.html", form=form)
 
 
@@ -101,10 +110,14 @@ def search():
             "submission_id": form.submission_id.data,
         }
 
+        print(conf.client_id, conf.client_secret, conf.user_agent)
         search_results = perform_search(search_params, conf.reddit)
 
         for result in search_results:
-            print(result)
+            print(result.url)
+            # TODO - Add the results to the database (if they don't already exist) and then pass them to the template
+            # TODO save the search to the users seaches table
+            # TODO - display the results and all of the each users results in the template
 
         print(search_results)
         # Process the search results as needed and pass them to the template

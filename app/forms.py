@@ -54,13 +54,13 @@ class LoginForm(FlaskForm):
 
 class API_Form(FlaskForm):
     user_agent = StringField(
-        "user_agent", validators=[InputRequired(), Length(min=4, max=15)]
+        "user_agent", validators=[InputRequired(), Length(min=4, max=50)]
     )
     client_secret = StringField(
-        "client_secret", validators=[InputRequired(), Length(min=4, max=15)]
+        "client_secret", validators=[InputRequired(), Length(min=4, max=50)]
     )
     client_id = StringField(
-        "client_id", validators=[InputRequired(), Length(min=4, max=15)]
+        "client_id", validators=[InputRequired(), Length(min=4, max=50)]
     )
     submit = SubmitField("Save API Key")
 

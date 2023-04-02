@@ -16,9 +16,9 @@ class User(UserMixin, db.Model):
 
 class API_Key(db.Model):
     __tablename__ = "api_key"
-    user_agent = db.Column(db.String(15), unique=True, primary_key=True)
-    client_secret = db.Column(db.String(15), unique=True)
-    client_id = db.Column(db.String(15), unique=True)
+    user_agent = db.Column(db.String(50), unique=True, primary_key=True)
+    client_secret = db.Column(db.String(50), unique=True)
+    client_id = db.Column(db.String(50), unique=True)
 
     def __init__(self, user_agent, client_secret, client_id):
         self.user_agent = user_agent

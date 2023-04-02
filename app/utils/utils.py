@@ -20,9 +20,22 @@ def perform_search(params, reddit_instance=conf.reddit):
     if search_type == "subreddit":
         subreddit_name = params.get("subreddit")
         subreddit = reddit_instance.subreddit(subreddit_name)
-        search_results = subreddit.search(
-            query, sort=sort, syntax=syntax, time_filter=time_filter, limit=limit
-        )
+
+        if sort == "relevance":
+            search_results = subreddit.search(
+                query, sort=sort, syntax=syntax, time_filter=time_filter, limit=limit
+            )
+        elif sort == "hot":
+            search_results = subreddit.hot(limit=limit)
+        elif sort == "top":
+            search_results = subreddit.top(time_filter=time_filter, limit=limit)
+        elif sort == "new":
+            search_results = subreddit.new(limit=limit)
+        elif sort == "comments":
+            search_results = subreddit.comments(limit=limit)
+        else:
+            return None
+
     elif search_type == "redditor":
         redditor_name = params.get("redditor")
         redditor = reddit_instance.redditor(redditor_name)
@@ -43,4 +56,5 @@ def perform_search(params, reddit_instance=conf.reddit):
         )
     else:
         return None
+
     return search_results
