@@ -1,6 +1,7 @@
 from app import db, login_manager
 from flask_login import UserMixin
 from praw import Reddit
+from praw.reddit import Submission, Comment, Redditor, Subreddit
 
 
 class User(UserMixin, db.Model):
@@ -47,6 +48,7 @@ class API_Key(db.Model):
 
 
 class Search(db.Model):
+    __tablename__ = "search"
     id = db.Column(db.Integer, primary_key=True)
     search_type = db.Column(db.String(50), nullable=False)
     query = db.Column(db.String(250), nullable=False)
@@ -60,11 +62,13 @@ class Search(db.Model):
 
 
 class Redditor(db.Model):
+    __tablename__ = "redditor"
     fullname = db.Column(db.String, primary_key=True)
     submissions = db.relationship("Submission", back_populates="author")
 
 
 class Subreddit(db.Model):
+    __tablename__ = "subreddit"
     id = db.Column(db.String, primary_key=True)
     display_name = db.Column(db.String)
     public_description = db.Column(db.String)
@@ -74,6 +78,7 @@ class Subreddit(db.Model):
 
 
 class Submission(db.Model):
+    __tablename__ = "submission"
     id = db.Column(db.String, primary_key=True)
     author_fullname = db.Column(db.String, db.ForeignKey("redditor.fullname"))
     subreddit_id = db.Column(db.String, db.ForeignKey("subreddit.id"))
@@ -90,6 +95,7 @@ class Submission(db.Model):
 
 
 class Image(db.Model):
+    __tablename__ = "image"
     id = db.Column(db.String, primary_key=True)
     small = db.Column(db.String)
     medium = db.Column(db.String)
@@ -101,7 +107,9 @@ class Image(db.Model):
 
 
 def parse_json_to_models(json_object):
+    json_object = vars(json_object)
     # Create Redditor
+    parse_redditor(json_object["author"])
     redditor_name = json_object["author"][18:-2]
     redditor = Redditor(fullname=json_object["author_fullname"])
 
@@ -142,7 +150,11 @@ def parse_json_to_models(json_object):
             subreddit_id=json_object["Subreddit"]["subreddit_id"],
         )
         images.append(image)
-
+    print(
+        "redditor: {}, subreddit: {}, submission: {}, images: {}".format(
+            redditor, subreddit, submission, images
+        )
+    )
     return redditor, subreddit, submission, images
 
 
@@ -184,6 +196,24 @@ def save_models_to_database(submission, redditor, subreddit, images):
         saved_images.append(saved_image)
 
     return saved_submission, saved_redditor, saved_subreddit, saved_images
+
+
+def parse_redditor(redditor):
+    if redditor == "None":
+        return
+    redditor = vars(redditor)
+    redditor = Redditor(
+        fullname=redditor["fullname"],
+        submissions=redditor["submissions"],
+    )
+    return redditor
+
+
+def parse_redditor_posts(redditor: Redditor):
+    posts = []
+    for post in redditor.submissions.top(time_limit="all", limit=None):
+        posts.append(parse_json_to_models(post))
+    return posts
 
 
 @login_manager.user_loader
