@@ -79,7 +79,6 @@ class SearchForm(FlaskForm):
             ("subreddit", "Subreddit"),
             ("redditor", "Redditor"),
             ("submission", "Submission"),
-            ("comments", "Comments"),
         ],
         validators=[DataRequired()],
     )
@@ -94,8 +93,6 @@ class SearchForm(FlaskForm):
             ("controversial", "Controversial"),
             ("guilded", "Guilded"),
             ("rising", "Rising"),
-            ("search_comments", "Search Comments"),
-            ("comments", "Comments"),
         ],
         validators=[DataRequired()],
     )
@@ -133,9 +130,6 @@ class SearchForm(FlaskForm):
             if self.redditor.data == "":
                 raise ValidationError("Please enter a redditor.")
         elif search_type.data == "submission":
-            if self.submission_id.data == "":
-                raise ValidationError("Please enter a submission ID.")
-        elif search_type.data == "comments":
             if self.submission_id.data == "":
                 raise ValidationError("Please enter a submission ID.")
 
